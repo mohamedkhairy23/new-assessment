@@ -4,6 +4,7 @@
 import Image from "next/image";
 import { Star, Heart } from "lucide-react";
 import { useState } from "react";
+import { motion } from "framer-motion";
 
 type Photographer = {
   id: number;
@@ -24,7 +25,11 @@ export default function PhotographerCard({
   const [isFavorite, setIsFavorite] = useState(false);
 
   return (
-    <div className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm flex flex-col hover:shadow-md transition-shadow duration-200">
+    <motion.div
+      whileHover={{ scale: 1.03 }}
+      transition={{ type: "spring", stiffness: 300 }}
+      className="bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm flex flex-col hover:shadow-md transition-shadow duration-200"
+    >
       {/* Image */}
       <div className="relative w-full h-48">
         <Image
@@ -99,6 +104,6 @@ export default function PhotographerCard({
           View Portfolio
         </button>
       </div>
-    </div>
+    </motion.div>
   );
 }

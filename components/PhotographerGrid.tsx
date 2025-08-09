@@ -1,4 +1,8 @@
+// PhotographerGrid.tsx
+"use client";
+
 import PhotographerCard from "@/components/PhotographerCard";
+import { motion, Variants } from "framer-motion";
 
 type Photographer = {
   id: number;
@@ -10,7 +14,7 @@ type Photographer = {
   reviews: number;
   price: number;
   image: string;
-  deliveryTime: number; // in days
+  deliveryTime: number;
 };
 
 const mockPhotographers: Photographer[] = [
@@ -112,6 +116,15 @@ const mockPhotographers: Photographer[] = [
   },
 ];
 
+const cardVariants: Variants = {
+  hidden: { y: 30, opacity: 0 },
+  visible: {
+    y: 0,
+    opacity: 1,
+    transition: { duration: 0.4, ease: "easeOut" },
+  },
+};
+
 export default function PhotographerGrid({
   searchTerm,
   category,
@@ -162,13 +175,21 @@ export default function PhotographerGrid({
   });
 
   return (
-    <main className="p-6 bg-gray-50 min-h-screen">
+    <main className="p-6 bg-white min-h-screen">
       <h2 className="text-sm font-semibold text-gray-800 mb-4">
         {filteredPhotographers.length} Result
       </h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
-        {filteredPhotographers.map((photographer) => (
-          <PhotographerCard key={photographer.id} photographer={photographer} />
+        {filteredPhotographers.map((photographer, index) => (
+          <motion.div
+            key={photographer.id}
+            variants={cardVariants}
+            initial="hidden"
+            animate="visible"
+            transition={{ delay: index * 0.05 }}
+          >
+            <PhotographerCard photographer={photographer} />
+          </motion.div>
         ))}
       </div>
     </main>
