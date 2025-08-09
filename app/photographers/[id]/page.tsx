@@ -202,7 +202,7 @@ export default function PhotographerDetails() {
           </section>
 
           {/* Portfolio Gallery */}
-          <section>
+          {/* <section>
             <h2 className="text-2xl font-bold text-gray-800 mb-4">Portfolio</h2>
             <div className="">
               <motion.div
@@ -217,7 +217,7 @@ export default function PhotographerDetails() {
                 />
               </motion.div>
             </div>
-          </section>
+          </section> */}
         </div>
 
         {/* Right Column - Booking Card */}
