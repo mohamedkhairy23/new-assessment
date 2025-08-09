@@ -133,18 +133,22 @@ const cardVariants: Variants = {
     transition: { duration: 0.4, ease: "easeOut" },
   },
 };
+type PhotographerGridProps = {
+  searchTerm: string;
+};
 
-export default function PhotographerGrid() {
-  const { searchTerm, category, filters, location, sort } =
-    usePhotographerContext();
+export default function PhotographerGrid({
+  searchTerm,
+}: PhotographerGridProps) {
+  const { category, filters, location, sort } = usePhotographerContext();
 
-  // Trim and lowercase location for reliable comparison
+  const normalizedSearch = searchTerm.trim().toLowerCase();
   const normalizedLocation = location.trim().toLowerCase();
 
   let filteredPhotographers = mockPhotographers.filter((p) => {
     const matchesSearch = `${p.name} ${p.cat}`
       .toLowerCase()
-      .includes(searchTerm.toLowerCase());
+      .includes(normalizedSearch);
     const matchesCategory = category
       ? p.cat.toLowerCase().includes(category.toLowerCase())
       : true;
@@ -154,7 +158,6 @@ export default function PhotographerGrid() {
     const matchesStatus = filters.status
       ? p.level.toLowerCase() === filters.status.toLowerCase()
       : true;
-
     const matchesBudget =
       filters.budget === "low"
         ? p.price < 80
@@ -163,7 +166,6 @@ export default function PhotographerGrid() {
         : filters.budget === "high"
         ? p.price > 120
         : true;
-
     const matchesTime =
       filters.time === "1d"
         ? p.deliveryTime <= 1
@@ -172,7 +174,6 @@ export default function PhotographerGrid() {
         : filters.time === "1m"
         ? p.deliveryTime <= 30
         : true;
-
     const matchesLocation = normalizedLocation
       ? p.location.toLowerCase().includes(normalizedLocation)
       : true;
@@ -188,30 +189,31 @@ export default function PhotographerGrid() {
     );
   });
 
-  filteredPhotographers = filteredPhotographers.slice();
-
+  // Sorting logic
   switch (sort) {
     case "latest":
-      filteredPhotographers.sort((a, b) => b.id - a.id);
+      filteredPhotographers = filteredPhotographers
+        .slice()
+        .sort((a, b) => b.id - a.id);
       break;
     case "oldest":
-      filteredPhotographers.sort((a, b) => a.id - b.id);
+      filteredPhotographers = filteredPhotographers
+        .slice()
+        .sort((a, b) => a.id - b.id);
       break;
     case "high":
-      filteredPhotographers.sort((a, b) => b.rating - a.rating);
+      filteredPhotographers = filteredPhotographers
+        .slice()
+        .sort((a, b) => b.rating - a.rating);
       break;
     case "low":
-      filteredPhotographers.sort((a, b) => a.rating - b.rating);
+      filteredPhotographers = filteredPhotographers
+        .slice()
+        .sort((a, b) => a.rating - b.rating);
       break;
     default:
       break;
   }
-
-  // Debug logs — remove after testing
-  console.log("Filters:", filters);
-  console.log("Location filter:", normalizedLocation);
-  console.log("Sort option:", sort);
-  console.log("Filtered count:", filteredPhotographers.length);
 
   return (
     <main className="p-6 bg-white min-h-screen">
