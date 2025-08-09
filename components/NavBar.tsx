@@ -32,7 +32,7 @@ export default function Navbar({ onSearchChange }: NavbarProps) {
 
   const handleSearch = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    onSearchChange?.(searchTerm.trim());
+    onSearchChange?.(searchTerm);
     setIsMobileSearchOpen(false);
   };
 
@@ -59,11 +59,14 @@ export default function Navbar({ onSearchChange }: NavbarProps) {
           <Search className="text-gray-400 w-5 h-5" />
           <input
             type="text"
-            placeholder="Find Vendor / Freelancer"
+            placeholder="Find Photographer"
             value={searchTerm}
             onChange={(e: ChangeEvent<HTMLInputElement>) => {
-              setSearchTerm(e.target.value);
-              // Removed onSearchChange call here for search only on submit
+              const val = e.target.value;
+              setSearchTerm(val);
+              if (val === "") {
+                onSearchChange?.("");
+              }
             }}
             className="bg-transparent outline-none px-3 flex-1 text-sm text-gray-700"
           />
@@ -130,8 +133,11 @@ export default function Navbar({ onSearchChange }: NavbarProps) {
               placeholder="Find Vendor / Freelancer"
               value={searchTerm}
               onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                setSearchTerm(e.target.value);
-                // Removed onSearchChange call here as well
+                const val = e.target.value;
+                setSearchTerm(val);
+                if (val === "") {
+                  onSearchChange?.("");
+                }
               }}
               className="bg-transparent outline-none px-3 flex-1 text-sm text-gray-700"
               autoFocus
