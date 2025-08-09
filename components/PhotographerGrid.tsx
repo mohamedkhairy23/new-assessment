@@ -10,6 +10,7 @@ type Photographer = {
   reviews: number;
   price: number;
   image: string;
+  deliveryTime: number; // in days
 };
 
 const mockPhotographers: Photographer[] = [
@@ -18,88 +19,96 @@ const mockPhotographers: Photographer[] = [
     name: "Kaviya Pariya",
     level: "Level 1",
     cat: "Portrait Photographer",
-    service: "ui",
+    service: "Wedding",
     rating: 4.8,
     reviews: 120,
     price: 50,
     image: "https://images.pexels.com/photos/1704120/pexels-photo-1704120.jpeg",
+    deliveryTime: 1,
   },
   {
     id: 2,
     name: "Liam Carter",
     level: "Level 2",
     cat: "Wedding Photographer",
-    service: "ux",
+    service: "Birthday",
     rating: 4.9,
     reviews: 200,
     price: 120,
     image: "https://images.pexels.com/photos/1024311/pexels-photo-1024311.jpeg",
+    deliveryTime: 7,
   },
   {
     id: 3,
     name: "Aisha Khan",
     level: "Top Rated",
     cat: "Event Photographer",
-    service: "full",
+    service: "Conference",
     rating: 5.0,
     reviews: 300,
     price: 150,
     image: "https://images.pexels.com/photos/2958280/pexels-photo-2958280.jpeg",
+    deliveryTime: 30,
   },
   {
     id: 4,
     name: "Lucas Silva",
     level: "Level 1",
     cat: "Travel Photographer",
-    service: "ui",
+    service: "Birthday",
     rating: 4.7,
     reviews: 80,
     price: 75,
     image: "https://images.pexels.com/photos/2113566/pexels-photo-2113566.jpeg",
+    deliveryTime: 1,
   },
   {
     id: 5,
     name: "Sophia Lee",
     level: "Level 2",
     cat: "Fashion Photographer",
-    service: "ux",
+    service: "Wedding",
     rating: 4.9,
     reviews: 190,
     price: 140,
     image: "https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg",
+    deliveryTime: 7,
   },
   {
     id: 6,
     name: "Ethan Brown",
     level: "Top Rated",
     cat: "Food Photographer",
-    service: "full",
+    service: "Product",
     rating: 5.0,
     reviews: 250,
     price: 100,
     image: "https://images.pexels.com/photos/70497/pexels-photo-70497.jpeg",
+    deliveryTime: 30,
   },
   {
     id: 7,
     name: "Isabella Rossi",
     level: "Level 1",
     cat: "Lifestyle Photographer",
-    service: "ui",
+    service: "Product",
     rating: 4.6,
     reviews: 60,
     price: 60,
     image: "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg",
+    deliveryTime: 1,
   },
   {
     id: 8,
     name: "Noah Williams",
     level: "Level 2",
     cat: "Nature Photographer",
-    service: "ux",
+    service: "Conference",
     rating: 4.8,
     reviews: 150,
     price: 90,
     image: "https://images.pexels.com/photos/3408744/pexels-photo-3408744.jpeg",
+    deliveryTime: 7,
   },
 ];
 
@@ -133,7 +142,14 @@ export default function PhotographerGrid({
         : filters.budget === "high"
         ? p.price > 120
         : true;
-    const matchesTime = true; // No time data in mock yet
+    const matchesTime =
+      filters.time === "1d"
+        ? p.deliveryTime <= 1
+        : filters.time === "1w"
+        ? p.deliveryTime <= 7
+        : filters.time === "1m"
+        ? p.deliveryTime <= 30
+        : true;
 
     return (
       matchesSearch &&

@@ -28,7 +28,7 @@ export default function FilterBar({
     <div className="w-full bg-white p-4 rounded-lg shadow-sm border border-gray-200 mt-4">
       <h2 className="text-sm font-medium text-gray-700 mb-3">
         Results For{" "}
-        <span className="text-green-600 font-semibold">(UI/UX Design)</span>
+        <span className="text-green-600 font-semibold">Photographers</span>
       </h2>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
@@ -39,9 +39,10 @@ export default function FilterBar({
           className="border border-gray-300 rounded-md px-3 py-2 text-sm text-gray-700 bg-white focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition"
         >
           <option value="">Service Type</option>
-          <option value="ui">UI Design</option>
-          <option value="ux">UX Design</option>
-          <option value="full">Full UI/UX</option>
+          <option value="Conference">Conference</option>
+          <option value="Product">Product</option>
+          <option value="Wedding">Wedding</option>
+          <option value="Birthday">Birthday</option>
         </select>
 
         {/* Status */}
@@ -68,7 +69,7 @@ export default function FilterBar({
           <option value="high">High</option>
         </select>
 
-        {/* Time */}
+        {/* Delivery Time */}
         <select
           value={time}
           onChange={(e) => setTime(e.target.value)}
