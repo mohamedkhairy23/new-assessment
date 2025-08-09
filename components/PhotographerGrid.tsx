@@ -16,6 +16,7 @@ type Photographer = {
   image: string;
   deliveryTime: number;
   location: string;
+  avatar: string;
 };
 
 const mockPhotographers: Photographer[] = [
@@ -29,6 +30,7 @@ const mockPhotographers: Photographer[] = [
     reviews: 120,
     price: 50,
     image: "https://images.pexels.com/photos/1466845/pexels-photo-1466845.jpeg",
+    avatar: "https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg", // avatar
     deliveryTime: 1,
     location: "New York",
   },
@@ -42,6 +44,7 @@ const mockPhotographers: Photographer[] = [
     reviews: 200,
     price: 120,
     image: "https://images.pexels.com/photos/403495/pexels-photo-403495.jpeg",
+    avatar: "https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg", // avatar
     deliveryTime: 7,
     location: "Los Angeles",
   },
@@ -55,6 +58,7 @@ const mockPhotographers: Photographer[] = [
     reviews: 300,
     price: 150,
     image: "https://images.pexels.com/photos/2958280/pexels-photo-2958280.jpeg",
+    avatar: "https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg", // avatar
     deliveryTime: 30,
     location: "Chicago",
   },
@@ -68,6 +72,8 @@ const mockPhotographers: Photographer[] = [
     reviews: 80,
     price: 75,
     image: "https://images.pexels.com/photos/2113566/pexels-photo-2113566.jpeg",
+    avatar: "https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg", // avatar
+
     deliveryTime: 1,
     location: "Miami",
   },
@@ -81,6 +87,7 @@ const mockPhotographers: Photographer[] = [
     reviews: 190,
     price: 140,
     image: "https://images.pexels.com/photos/403495/pexels-photo-403495.jpeg",
+    avatar: "https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg", // avatar
     deliveryTime: 7,
     location: "San Francisco",
   },
@@ -94,6 +101,7 @@ const mockPhotographers: Photographer[] = [
     reviews: 250,
     price: 100,
     image: "https://images.pexels.com/photos/70497/pexels-photo-70497.jpeg",
+    avatar: "https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg", // avatar
     deliveryTime: 30,
     location: "Seattle",
   },
@@ -107,6 +115,7 @@ const mockPhotographers: Photographer[] = [
     reviews: 60,
     price: 60,
     image: "https://images.pexels.com/photos/403495/pexels-photo-403495.jpeg",
+    avatar: "https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg", // avatar
     deliveryTime: 1,
     location: "Austin",
   },
@@ -120,6 +129,7 @@ const mockPhotographers: Photographer[] = [
     reviews: 150,
     price: 90,
     image: "https://images.pexels.com/photos/3408744/pexels-photo-3408744.jpeg",
+    avatar: "https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg", // avatar
     deliveryTime: 7,
     location: "Denver",
   },

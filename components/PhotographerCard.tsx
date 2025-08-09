@@ -15,6 +15,7 @@ type Photographer = {
   reviews: number;
   price: number;
   image: string;
+  avatar: string;
 };
 
 export default function PhotographerCard({
@@ -58,7 +59,7 @@ export default function PhotographerCard({
         {/* Name */}
         <div className="flex items-center gap-2">
           <Image
-            src="https://randomuser.me/api/portraits/women/44.jpg"
+            src={photographer.avatar}
             alt={photographer.name}
             width={32}
             height={32}
