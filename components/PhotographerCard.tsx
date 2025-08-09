@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Star, Heart } from "lucide-react";
 import { useState } from "react";
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 type Photographer = {
   id: number;
@@ -98,10 +99,12 @@ export default function PhotographerCard({
           /hr
         </p>
 
-        {/* Button */}
-        <button className="mt-4 bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-md text-sm font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
+        <Link
+          href={`/photographers/${photographer.id}`}
+          className="mt-4 bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-md text-sm font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 text-center block"
+        >
           View Portfolio
-        </button>
+        </Link>
       </div>
     </motion.div>
   );
