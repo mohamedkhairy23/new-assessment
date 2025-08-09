@@ -1,7 +1,7 @@
-// PhotographerGrid.tsx
 "use client";
 
 import PhotographerCard from "@/components/PhotographerCard";
+import { usePhotographerContext } from "@/context/PhotographerContext";
 import { motion, Variants } from "framer-motion";
 
 type Photographer = {
@@ -15,6 +15,7 @@ type Photographer = {
   price: number;
   image: string;
   deliveryTime: number;
+  location: string;
 };
 
 const mockPhotographers: Photographer[] = [
@@ -29,6 +30,7 @@ const mockPhotographers: Photographer[] = [
     price: 50,
     image: "https://images.pexels.com/photos/1704120/pexels-photo-1704120.jpeg",
     deliveryTime: 1,
+    location: "New York",
   },
   {
     id: 2,
@@ -41,6 +43,7 @@ const mockPhotographers: Photographer[] = [
     price: 120,
     image: "https://images.pexels.com/photos/1024311/pexels-photo-1024311.jpeg",
     deliveryTime: 7,
+    location: "Los Angeles",
   },
   {
     id: 3,
@@ -53,6 +56,7 @@ const mockPhotographers: Photographer[] = [
     price: 150,
     image: "https://images.pexels.com/photos/2958280/pexels-photo-2958280.jpeg",
     deliveryTime: 30,
+    location: "Chicago",
   },
   {
     id: 4,
@@ -65,6 +69,7 @@ const mockPhotographers: Photographer[] = [
     price: 75,
     image: "https://images.pexels.com/photos/2113566/pexels-photo-2113566.jpeg",
     deliveryTime: 1,
+    location: "Miami",
   },
   {
     id: 5,
@@ -77,6 +82,7 @@ const mockPhotographers: Photographer[] = [
     price: 140,
     image: "https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg",
     deliveryTime: 7,
+    location: "San Francisco",
   },
   {
     id: 6,
@@ -89,6 +95,7 @@ const mockPhotographers: Photographer[] = [
     price: 100,
     image: "https://images.pexels.com/photos/70497/pexels-photo-70497.jpeg",
     deliveryTime: 30,
+    location: "Seattle",
   },
   {
     id: 7,
@@ -101,6 +108,7 @@ const mockPhotographers: Photographer[] = [
     price: 60,
     image: "https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg",
     deliveryTime: 1,
+    location: "Austin",
   },
   {
     id: 8,
@@ -113,6 +121,7 @@ const mockPhotographers: Photographer[] = [
     price: 90,
     image: "https://images.pexels.com/photos/3408744/pexels-photo-3408744.jpeg",
     deliveryTime: 7,
+    location: "Denver",
   },
 ];
 
@@ -125,16 +134,14 @@ const cardVariants: Variants = {
   },
 };
 
-export default function PhotographerGrid({
-  searchTerm,
-  category,
-  filters,
-}: {
-  searchTerm: string;
-  category: string;
-  filters: { service: string; status: string; budget: string; time: string };
-}) {
-  const filteredPhotographers = mockPhotographers.filter((p) => {
+export default function PhotographerGrid() {
+  const { searchTerm, category, filters, location, sort } =
+    usePhotographerContext();
+
+  // Trim and lowercase location for reliable comparison
+  const normalizedLocation = location.trim().toLowerCase();
+
+  let filteredPhotographers = mockPhotographers.filter((p) => {
     const matchesSearch = `${p.name} ${p.cat}`
       .toLowerCase()
       .includes(searchTerm.toLowerCase());
@@ -147,6 +154,7 @@ export default function PhotographerGrid({
     const matchesStatus = filters.status
       ? p.level.toLowerCase() === filters.status.toLowerCase()
       : true;
+
     const matchesBudget =
       filters.budget === "low"
         ? p.price < 80
@@ -155,6 +163,7 @@ export default function PhotographerGrid({
         : filters.budget === "high"
         ? p.price > 120
         : true;
+
     const matchesTime =
       filters.time === "1d"
         ? p.deliveryTime <= 1
@@ -164,20 +173,51 @@ export default function PhotographerGrid({
         ? p.deliveryTime <= 30
         : true;
 
+    const matchesLocation = normalizedLocation
+      ? p.location.toLowerCase().includes(normalizedLocation)
+      : true;
+
     return (
       matchesSearch &&
       matchesCategory &&
       matchesService &&
       matchesStatus &&
       matchesBudget &&
-      matchesTime
+      matchesTime &&
+      matchesLocation
     );
   });
+
+  filteredPhotographers = filteredPhotographers.slice();
+
+  switch (sort) {
+    case "latest":
+      filteredPhotographers.sort((a, b) => b.id - a.id);
+      break;
+    case "oldest":
+      filteredPhotographers.sort((a, b) => a.id - b.id);
+      break;
+    case "high":
+      filteredPhotographers.sort((a, b) => b.rating - a.rating);
+      break;
+    case "low":
+      filteredPhotographers.sort((a, b) => a.rating - b.rating);
+      break;
+    default:
+      break;
+  }
+
+  // Debug logs — remove after testing
+  console.log("Filters:", filters);
+  console.log("Location filter:", normalizedLocation);
+  console.log("Sort option:", sort);
+  console.log("Filtered count:", filteredPhotographers.length);
 
   return (
     <main className="p-6 bg-white min-h-screen">
       <h2 className="text-sm font-semibold text-gray-800 mb-4">
         {filteredPhotographers.length} Result
+        {filteredPhotographers.length !== 1 ? "s" : ""}
       </h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
         {filteredPhotographers.map((photographer, index) => (

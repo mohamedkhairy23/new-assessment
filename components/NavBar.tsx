@@ -1,4 +1,3 @@
-// components/NavBar.tsx
 "use client";
 import { useState, useEffect, useRef, FormEvent, ChangeEvent } from "react";
 import { Search, Bell, MessageSquare, ShoppingCart, X } from "lucide-react";

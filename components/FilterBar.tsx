@@ -1,28 +1,13 @@
 "use client";
-import { useState, useEffect } from "react";
+import { usePhotographerContext } from "@/context/PhotographerContext";
 import SearchLocationBar from "./SearchLocationBar";
 
-type Filters = {
-  service: string;
-  status: string;
-  budget: string;
-  time: string;
-};
+export default function FilterBar() {
+  const { filters, setFilters } = usePhotographerContext();
 
-export default function FilterBar({
-  onFiltersChange,
-}: {
-  onFiltersChange: (filters: Filters) => void;
-}) {
-  const [service, setService] = useState("");
-  const [status, setStatus] = useState("");
-  const [budget, setBudget] = useState("");
-  const [time, setTime] = useState("");
-
-  // Notify parent whenever filters change
-  useEffect(() => {
-    onFiltersChange({ service, status, budget, time });
-  }, [service, status, budget, time, onFiltersChange]);
+  const updateFilter = (key: keyof typeof filters, value: string) => {
+    setFilters({ ...filters, [key]: value });
+  };
 
   return (
     <div className="w-full bg-white p-4 rounded-lg shadow-sm border border-gray-200 mt-4">
@@ -34,8 +19,8 @@ export default function FilterBar({
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
         {/* Service */}
         <select
-          value={service}
-          onChange={(e) => setService(e.target.value)}
+          value={filters.service}
+          onChange={(e) => updateFilter("service", e.target.value)}
           className="border border-gray-300 rounded-md px-3 py-2 text-sm text-gray-700 bg-white focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition"
         >
           <option value="">Service Type</option>
@@ -47,8 +32,8 @@ export default function FilterBar({
 
         {/* Status */}
         <select
-          value={status}
-          onChange={(e) => setStatus(e.target.value)}
+          value={filters.status}
+          onChange={(e) => updateFilter("status", e.target.value)}
           className="border border-gray-300 rounded-md px-3 py-2 text-sm text-gray-700 bg-white focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition"
         >
           <option value="">Select Status</option>
@@ -59,8 +44,8 @@ export default function FilterBar({
 
         {/* Budget */}
         <select
-          value={budget}
-          onChange={(e) => setBudget(e.target.value)}
+          value={filters.budget}
+          onChange={(e) => updateFilter("budget", e.target.value)}
           className="border border-gray-300 rounded-md px-3 py-2 text-sm text-gray-700 bg-white focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition"
         >
           <option value="">Budget</option>
@@ -71,8 +56,8 @@ export default function FilterBar({
 
         {/* Delivery Time */}
         <select
-          value={time}
-          onChange={(e) => setTime(e.target.value)}
+          value={filters.time}
+          onChange={(e) => updateFilter("time", e.target.value)}
           className="border border-gray-300 rounded-md px-3 py-2 text-sm text-gray-700 bg-white focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 transition"
         >
           <option value="">Delivery Time</option>

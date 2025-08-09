@@ -1,6 +1,7 @@
 "use client";
 import { useRef, useState, useEffect } from "react";
 import { ChevronRight, ChevronLeft } from "lucide-react";
+import { usePhotographerContext } from "@/context/PhotographerContext";
 
 const categories: string[] = [
   "Portrait Photographer",
@@ -26,15 +27,13 @@ const categories: string[] = [
   "Candid Photographer",
 ];
 
-export default function CategoryMenu({
-  onCategorySelect,
-}: {
-  onCategorySelect: (category: string) => void;
-}) {
+export default function CategoryMenu() {
   const scrollRef = useRef<HTMLDivElement | null>(null);
   const [activeCategory, setActiveCategory] = useState<string>("");
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(false);
+
+  const { setCategory } = usePhotographerContext();
 
   const scroll = (direction: "left" | "right") => {
     if (scrollRef.current) {
@@ -57,7 +56,7 @@ export default function CategoryMenu({
   const handleCategoryClick = (category: string) => {
     const newCategory = activeCategory === category ? "" : category; // toggle
     setActiveCategory(newCategory);
-    onCategorySelect(newCategory);
+    setCategory(newCategory);
   };
 
   useEffect(() => {
@@ -71,11 +70,9 @@ export default function CategoryMenu({
 
   return (
     <div className="relative w-full bg-white border-b border-gray-200">
-      {/* Gradient overlays - stronger now that scrollbar is hidden */}
       <div className="absolute left-0 top-0 h-full w-12 bg-gradient-to-r from-white to-transparent pointer-events-none z-0" />
       <div className="absolute right-0 top-0 h-full w-12 bg-gradient-to-l from-white to-transparent pointer-events-none z-0" />
 
-      {/* Left Arrow */}
       {showLeftArrow && (
         <button
           aria-label="Scroll Left"
@@ -86,7 +83,6 @@ export default function CategoryMenu({
         </button>
       )}
 
-      {/* Scrollable Categories - Scrollbar completely hidden */}
       <div
         ref={scrollRef}
         className="flex overflow-x-auto py-3 space-x-4 no-scrollbar"
@@ -106,7 +102,6 @@ export default function CategoryMenu({
         ))}
       </div>
 
-      {/* Right Arrow */}
       {showRightArrow && (
         <button
           aria-label="Scroll Right"
