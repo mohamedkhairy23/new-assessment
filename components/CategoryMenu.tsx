@@ -3,23 +3,34 @@ import { useRef, useState, useEffect } from "react";
 import { ChevronRight, ChevronLeft } from "lucide-react";
 
 const categories: string[] = [
-  "App Development",
-  "Programming & Tech",
-  "UI Design",
-  "Video & Animation",
-  "Writing & Translation",
-  "Music & Audio",
-  "Digital Marketing",
-  "AI Services",
-  "Consulting",
-  "Bids",
-  "Voice & Animations",
-  "Automation",
-  "Machines",
-  "Photography",
+  "Portrait Photographer",
+  "Wedding Photographer",
+  "Travel Photographer",
+  "Event Photographer",
+  "Fashion Photographer",
+  "Food Photographer",
+  "Lifestyle Photographer",
+  "Nature Photographer",
+  "Product Photographer",
+  "Real Estate Photographer",
+  "Sports Photographer",
+  "Pet Photographer",
+  "Commercial Photographer",
+  "Aerial Photographer",
+  "Underwater Photographer",
+  "Documentary Photographer",
+  "Fine Art Photographer",
+  "Street Photographer",
+  "Architectural Photographer",
+  "Astrophotographer",
+  "Candid Photographer",
 ];
 
-export default function CategoryMenu() {
+export default function CategoryMenu({
+  onCategorySelect,
+}: {
+  onCategorySelect: (category: string) => void;
+}) {
   const scrollRef = useRef<HTMLDivElement | null>(null);
   const [activeCategory, setActiveCategory] = useState<string>("");
   const [showLeftArrow, setShowLeftArrow] = useState(false);
@@ -41,6 +52,12 @@ export default function CategoryMenu() {
       setShowLeftArrow(scrollLeft > 0);
       setShowRightArrow(scrollLeft < scrollWidth - clientWidth);
     }
+  };
+
+  const handleCategoryClick = (category: string) => {
+    const newCategory = activeCategory === category ? "" : category; // toggle
+    setActiveCategory(newCategory);
+    onCategorySelect(newCategory);
   };
 
   useEffect(() => {
@@ -72,18 +89,15 @@ export default function CategoryMenu() {
       {/* Scrollable Categories - Scrollbar completely hidden */}
       <div
         ref={scrollRef}
-        onScroll={checkScroll}
-        className={`flex overflow-x-auto py-3 space-x-4 scroll-smooth no-scrollbar ${
-          showLeftArrow ? "pl-10" : "pl-4"
-        } ${showRightArrow ? "pr-10" : "pr-4"}`}
+        className="flex overflow-x-auto py-3 space-x-4 no-scrollbar"
       >
         {categories.map((category, index) => (
           <button
             key={index}
-            onClick={() => setActiveCategory(category)}
+            onClick={() => handleCategoryClick(category)}
             className={`whitespace-nowrap px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 ${
               activeCategory === category
-                ? "text-green-600 bg-green-50 relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-green-500 after:animate-underline"
+                ? "text-green-600 bg-green-50"
                 : "text-gray-700 hover:text-green-600 hover:bg-gray-50"
             }`}
           >

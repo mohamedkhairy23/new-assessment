@@ -9,14 +9,15 @@ import PhotographerGrid from "@/components/PhotographerGrid";
 
 export default function Home() {
   const [searchTerm, setSearchTerm] = useState("");
+  const [category, setCategory] = useState("");
 
   return (
     <>
       <Navbar onSearchChange={setSearchTerm} />
       <main className="p-6 bg-white min-h-screen">
-        <CategoryMenu />
+        <CategoryMenu onCategorySelect={setCategory} />
         <FilterBar />
-        <PhotographerGrid searchTerm={searchTerm} />
+        <PhotographerGrid searchTerm={searchTerm} category={category} />
         <Footer />
       </main>
     </>

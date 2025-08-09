@@ -9,7 +9,7 @@ type Photographer = {
   id: number;
   name: string;
   level: string;
-  role: string;
+  cat: string;
   rating: number;
   reviews: number;
   price: number;
@@ -70,7 +70,7 @@ export default function PhotographerCard({
             {photographer.level}
           </p>
           <p className="text-sm text-gray-700 line-clamp-2">
-            {photographer.role}
+            {photographer.cat}
           </p>
         </div>
 

@@ -17,7 +17,7 @@ const mockPhotographers = [
     id: 1,
     name: "Kaviya Pariya",
     level: "Level 1",
-    role: "Portrait Photographer",
+    cat: "Portrait Photographer",
     rating: 4.8,
     reviews: 120,
     price: 50,
@@ -27,7 +27,7 @@ const mockPhotographers = [
     id: 2,
     name: "Liam Carter",
     level: "Level 2",
-    role: "Wedding Photographer",
+    cat: "Wedding Photographer",
     rating: 4.9,
     reviews: 200,
     price: 120,
@@ -37,7 +37,7 @@ const mockPhotographers = [
     id: 3,
     name: "Aisha Khan",
     level: "Top Rated",
-    role: "Event Photographer",
+    cat: "Event Photographer",
     rating: 5.0,
     reviews: 300,
     price: 150,
@@ -47,7 +47,7 @@ const mockPhotographers = [
     id: 4,
     name: "Lucas Silva",
     level: "Level 1",
-    role: "Travel Photographer",
+    cat: "Travel Photographer",
     rating: 4.7,
     reviews: 80,
     price: 75,
@@ -57,7 +57,7 @@ const mockPhotographers = [
     id: 5,
     name: "Sophia Lee",
     level: "Level 2",
-    role: "Fashion Photographer",
+    cat: "Fashion Photographer",
     rating: 4.9,
     reviews: 190,
     price: 140,
@@ -67,7 +67,7 @@ const mockPhotographers = [
     id: 6,
     name: "Ethan Brown",
     level: "Top Rated",
-    role: "Food Photographer",
+    cat: "Food Photographer",
     rating: 5.0,
     reviews: 250,
     price: 100,
@@ -77,7 +77,7 @@ const mockPhotographers = [
     id: 7,
     name: "Isabella Rossi",
     level: "Level 1",
-    role: "Lifestyle Photographer",
+    cat: "Lifestyle Photographer",
     rating: 4.6,
     reviews: 60,
     price: 60,
@@ -87,7 +87,7 @@ const mockPhotographers = [
     id: 8,
     name: "Noah Williams",
     level: "Level 2",
-    role: "Nature Photographer",
+    cat: "Nature Photographer",
     rating: 4.8,
     reviews: 150,
     price: 90,
@@ -96,19 +96,26 @@ const mockPhotographers = [
 ];
 export default function PhotographerGrid({
   searchTerm,
+  category,
 }: {
   searchTerm: string;
+  category: string;
 }) {
-  const filteredPhotographers = mockPhotographers.filter((p) =>
-    `${p.name} ${p.role}`.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredPhotographers = mockPhotographers.filter((p) => {
+    const matchesSearch = `${p.name} ${p.cat}`
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+    const matchesCategory = category
+      ? p.cat.toLowerCase().includes(category.toLowerCase())
+      : true;
+    return matchesSearch && matchesCategory;
+  });
 
   return (
     <main className="p-6 bg-gray-50 min-h-screen">
       <h2 className="text-sm font-semibold text-gray-800 mb-4">
         {filteredPhotographers.length} Result
       </h2>
-
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
         {filteredPhotographers.map((photographer) => (
           <PhotographerCard key={photographer.id} photographer={photographer} />
